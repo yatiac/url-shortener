@@ -46,6 +46,11 @@ export default function Home() {
       new URL(string)
       return true
     } catch (e) {
+      if (e instanceof TypeError) {
+        setError('The URL format is incorrect. Please ensure it starts with http:// or https://')
+      } else {
+        setError('An unexpected error occurred while validating the URL')
+      }
       console.log(e)
       return false
     }
