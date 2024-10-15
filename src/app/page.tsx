@@ -32,7 +32,8 @@ export default function Home() {
       const result = await shortenUrl(url)
       setShortUrl(result)
       setUrl('') // Clear the input after successful submission
-    } catch (err) {
+    } catch (e) {
+      console.log(e)
       setError('An error occurred while shortening the URL')
     } finally {
       setLoading(false)
@@ -43,7 +44,8 @@ export default function Home() {
     try {
       new URL(string)
       return true
-    } catch (_) {
+    } catch (e) {
+      console.log(e)
       return false
     }
   }
@@ -55,7 +57,7 @@ export default function Home() {
       </h1>
       <Card className="w-full max-w-md bg-black bg-opacity-50 border border-purple-500">
         <CardHeader>
-          <CardDescription className="text-center text-gray-300">Enter a long URL and we'll make it shorter for you!</CardDescription>
+          <CardDescription className="text-center text-gray-300">Enter a long URL and we&apos;ll make it shorter for you!</CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
