@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
 import { Label } from "@/components/ui/label"
-import { AlertCircle, Link } from "lucide-react"
+import { AlertCircle, Copy, Link } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { shortenUrl } from './actions'
 import { FaGithub } from 'react-icons/fa'
@@ -15,6 +15,7 @@ export default function Home() {
   const [error, setError] = useState('')
   const [shortUrl, setShortUrl] = useState('')
   const [loading, setLoading] = useState(false)
+  const [copySuccess, setCopySuccess] = useState('')
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -47,6 +48,19 @@ export default function Home() {
     } catch (e) {
       console.log(e)
       return false
+    }
+  }
+
+  const handleCopy = () => {
+    if (shortUrl) {
+      navigator.clipboard.writeText(shortUrl)
+        .then(() => {
+          setCopySuccess('Copied!')
+          setTimeout(() => setCopySuccess(''), 2000) // Clear message after 2 seconds
+        })
+        .catch(err => {
+          console.error('Failed to copy: ', err)
+        })
     }
   }
 
@@ -107,12 +121,29 @@ export default function Home() {
           )}
           {shortUrl && (
             <Alert className="mt-4 bg-green-900 border-green-500 text-green-200">
-              <Link className="h-4 w-4" />
-              <AlertTitle>Success!</AlertTitle>
-              <AlertDescription>
-                Your shortened URL: <a href={shortUrl} target="_blank" rel="noopener noreferrer" className="font-bold underline text-blue-300">{shortUrl}</a>
-              </AlertDescription>
-            </Alert>
+            <Link className="h-4 w-4" />
+            <AlertTitle>Success!</AlertTitle>
+            <AlertDescription className="mt-2 flex items-center justify-between">
+              <span>
+                Your shortened URL:{" "}
+                <a
+                  href={shortUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-bold underline text-green-300 hover:text-green-100 transition-colors"
+                >
+                  {shortUrl}
+                </a>
+              </span>
+              <Button
+                onClick={handleCopy}
+                className="ml-2 bg-green-700 hover:bg-green-600 text-green-100 font-medium py-1 px-3 rounded transition-colors"
+              >
+                <Copy className="h-4 w-4 mr-2" />
+                {copySuccess ? 'Copied!' : 'Copy'}
+              </Button>
+            </AlertDescription>
+          </Alert>
           )}
         </CardContent>
       </Card>
