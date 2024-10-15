@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# URL Shortener
+
+This project is a simple URL shortener application built with Next.js and PostgreSQL.
+
+## Features
+
+- Shorten long URLs to easily shareable short links
+- Redirect users from short links to original long URLs
+- PostgreSQL database for storing URL mappings
+
+## Prerequisites
+
+- Node.js (v14 or later)
+- Git
 
 ## Getting Started
 
-First, run the development server:
+1. Clone the repository:
+   ```
+   git clone https://github.com/your-username/url-shortener.git
+   cd url-shortener
+   ```
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. Copy the `.env.sample` file to `.env.local` and fill in the required environment variables:
+   ```
+   cp .env.sample .env.local
+   ```
+   Make sure to set the `NEXT_PUBLIC_BASE_URL` to your local development URL (e.g., `http://localhost:3000`).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Install dependencies:
+   ```
+   npm install
+   ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. Run the development server:
+   ```
+   npm run dev
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
-## Learn More
+## Database Management
 
-To learn more about Next.js, take a look at the following resources:
+- PostgreSQL is running on port 54320
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Deployment
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+To deploy this application, make sure to update the `NEXT_PUBLIC_BASE_URL` in your production environment to match your domain.
 
-## Deploy on Vercel
+## Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+This project is open source and available under the [MIT License](LICENSE).
