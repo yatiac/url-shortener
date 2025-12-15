@@ -1,6 +1,6 @@
 import { notFound, redirect } from 'next/navigation'
 
-export default async function ShortUrlRedirect({ params }: { params: { shortCode: string } }) {
+export default async function ShortUrlRedirect({ params }: {params: Promise<{ shortCode: string }>}) {
   const { shortCode } = await params;
   const res = await fetch(`${process.env.NEXT_PUBLIC_GO_API_URL}/${shortCode}`, {
     method: 'GET',
