@@ -1,14 +1,22 @@
-import { sql } from '@vercel/postgres'
 import { notFound, redirect } from 'next/navigation'
 
 export default async function ShortUrlRedirect({ params }: { params: { shortCode: string } }) {
-  const { rows } = await sql`
-    SELECT long_url FROM shortened_urls WHERE short_code = ${params.shortCode}
-  `
+  const { shortCode } = await params;
+  const res = await fetch(`${process.env.NEXT_PUBLIC_GO_API_URL}/${shortCode}`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    cache: 'no-store',
+  })
 
-  if (rows.length === 0) {
+  console.log('Fetch response status:', `${process.env.NEXT_PUBLIC_GO_API_URL}/api/${shortCode}`);
+
+  if (!res.ok) {
     notFound()
   }
 
-  redirect(rows[0].long_url)
+  const response = await res.json()
+  
+  redirect(response.long_url)
 }

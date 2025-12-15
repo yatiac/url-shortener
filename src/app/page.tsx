@@ -7,7 +7,6 @@ import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/
 import { Label } from "@/components/ui/label"
 import { AlertCircle, Copy, Link } from "lucide-react"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { shortenUrl } from './actions'
 import { FaGithub } from 'react-icons/fa'
 
 export default function Home() {
@@ -30,8 +29,14 @@ export default function Home() {
     }
 
     try {
-      const result = await shortenUrl(url)
-      setShortUrl(result)
+      const result = await fetch(process.env.NEXT_PUBLIC_GO_API_URL + '/api/shorten', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ long_url: url }),
+      }).then(res => res.json()).then(data => data.slug)
+      setShortUrl(`${process.env.NEXT_PUBLIC_BASE_URL}/${result}`)
       setUrl('') // Clear the input after successful submission
     } catch (e) {
       console.log(e)
